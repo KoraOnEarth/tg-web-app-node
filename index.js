@@ -1,15 +1,15 @@
-const TelegramBot = require('node-telegram-bot-api')
-const express = require('express')
-const cors = require('cors')
+const TelegramBot = require('node-telegram-bot-api');
+const express = require('express');
+const cors = require('cors');
 
-const token='5526663711:AAFgzZl8hjT1LP8U_p-qbJ6HKAv_v1FrMrQ'
-const webAppUrl = 'https://willowy-shortbread-781f01.netlify.app'
+const token='5526663711:AAFgzZl8hjT1LP8U_p-qbJ6HKAv_v1FrMrQ';
+const webAppUrl = 'https://willowy-shortbread-781f01.netlify.app';
 
-const bot = new TelegramBot(token, {polling: true})
-const app = express()
+const bot = new TelegramBot(token, {polling: true});
+const app = express();
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
