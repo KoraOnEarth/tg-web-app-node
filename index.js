@@ -40,8 +40,6 @@ bot.on('message', async (msg) => {
             const data = JSON.parse(msg?.web_app_data?.data)
 
             await bot.sendMessage(chatId, `Спасибо за обратную связь!\nВаша страна: ${data?.country}\nВаша улица: ${data?.street}`)
-            await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
-            await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
 
             setTimeout(async () => {
                 await bot.sendMessage(chatId, 'Всю информацию Вы получите в этом чате')
@@ -59,16 +57,12 @@ app.post('/web-data', async (req, res) => {
             type: 'article',
             id: queryId,
             title: 'Успешная покупка',
-            input_message_content: {message_text: `Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products.map(item => item.title).join(', ')}`}
+            input_message_content: {
+                message_text: `Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products.map(item => item.title).join(', ')}`
+            }
         })
         return res.status(200).json({})
     } catch (error) {
-        await bot.answerWebAppQuery(queryId, {
-            type: 'article',
-            id: queryId,
-            title: 'Не удалось приобрести товар',
-            input_message_content: {message_text: `Не удалось приобрести товар`}
-        })
         return res.status(500).json({})
     }
         
