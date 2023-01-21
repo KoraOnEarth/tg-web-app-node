@@ -16,7 +16,7 @@ bot.on('message', async (msg) => {
     const text = msg.text;
 
     if(text === '/start') {
-        await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
+        await bot.sendMessage(chatId, 'Заполните, пожалуйста, форму.\nНеобходимая кнопка появилась у Вас под строкой ввода', {
             reply_markup: {
                 keyboard: [
                     [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
@@ -24,13 +24,7 @@ bot.on('message', async (msg) => {
             }
         })
 
-        await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
-            reply_markup: {
-                inline_keyboard: [
-                    [{text: 'Сделать заказ', web_app: {url: webAppUrl}}]
-                ]
-            }
-        })
+        await bot.sendMessage(chatId, 'Зайти в наш магазин можно через кнопку "Магазин" слева от строки ввода')
     }
 
     if(msg?.web_app_data?.data) {
