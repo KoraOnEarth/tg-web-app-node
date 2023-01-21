@@ -23,8 +23,6 @@ bot.on('message', async (msg) => {
                 ]
             }
         })
-
-        await bot.sendMessage(chatId, 'Зайти в наш магазин можно через кнопку "Магазин" слева от строки ввода')
     }
 
     if(msg?.web_app_data?.data) {
