@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
-const express = require('express');
-const cors = require('cors');
+const express = require('express'); //Для поднятия сервака
+const cors = require('cors'); //Для деплоя на облако
 
 const token='5526663711:AAFgzZl8hjT1LP8U_p-qbJ6HKAv_v1FrMrQ';
 const webAppUrl = 'https://willowy-shortbread-781f01.netlify.app';
@@ -8,8 +8,8 @@ const webAppUrl = 'https://willowy-shortbread-781f01.netlify.app';
 const bot = new TelegramBot(token, {polling: true});
 const app = express();
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); //для парсинга JSON
+app.use(cors()); //Для кроссдоменных запросов
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -25,10 +25,10 @@ bot.on('message', async (msg) => {
         })
     }
 
+    // Сюда прилетают данные, отправленные из web-приложения
     if(msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
-            console.log(data)
             await bot.sendMessage(chatId, `Спасибо за обратную связь!\nВаша страна: ${data?.country}\nВаша улица: ${data?.street}`)
         } catch (e) {
             console.log(e);
@@ -36,6 +36,7 @@ bot.on('message', async (msg) => {
     }
 });
 
+//Обработка запроса
 app.post('/web-data', async (req, res) => {
     const {queryId, products = [], totalPrice} = req.body;
     try {
@@ -55,4 +56,4 @@ app.post('/web-data', async (req, res) => {
 
 const PORT = 8000;
 
-app.listen(PORT, () => console.log('server started on PORT ' + PORT))
+app.listen(PORT, () => console.log('Server started on PORT ' + PORT))
